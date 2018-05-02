@@ -1,5 +1,7 @@
 package com.apitore.api.com.atilika.kuromoji;
 
+import java.util.Date;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,14 +25,19 @@ public class SwaggerConfiguration {
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2)
         .select()
-        .apis(RequestHandlerSelectors.basePackage("com.apitore.api.com.atilika.kuromoji.controler"))
+        .apis(RequestHandlerSelectors.basePackage("com.apitore.api.com.atilika.kuromoji.controller"))
         .paths(PathSelectors.any())
         .build()
-        .apiInfo(metadata());
+        .apiInfo(metadata())
+        .directModelSubstitute(Date.class, Long.class);
   }
 
   private ApiInfo metadata() {
-    return new ApiInfoBuilder().title("Kuromoji APIs").build();
+    return new ApiInfoBuilder()
+        .title("Kuromoji APIs")
+        .description("Kuromoji: japanese morphological analyzer.")
+        .version("0.0.1")
+        .build();
   }
 
 }
